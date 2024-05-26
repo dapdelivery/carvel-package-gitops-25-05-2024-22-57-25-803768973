@@ -1,0 +1,34 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: where-for-dinner-search.my-apps.tap.20240526081041.0.0+build.6aff574
+spec:
+  refName: where-for-dinner-search.my-apps.tap
+  version: 20240526081041.0.0+build.6aff574
+  releaseNotes: |
+    Release v20240526081041.0.0+build.6aff574 of package where-for-dinner-search.my-apps.tap
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/tap-ci/ci-pipeline/apps-25-05-2024-22-57-25-803768973/where-for-dinner-search-my-apps-bundle@sha256:438664d0552d774cdf65ec941b44ec4b64a75140a9d02cceade0a1a3b74aa802
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        workload_name:
+          type: string
+          default: ""
+          minLength: 1
+
